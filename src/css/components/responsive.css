@@ -1,0 +1,307 @@
+/* Responsive Design Styles */
+
+/* Large Screens (default) */
+.container {
+    max-width: 1600px;
+    height: 95vh;
+    grid-template-columns: 1fr 450px;
+}
+
+/* Desktop and Smaller Screens */
+@media (max-width: 1400px) {
+    .container {
+        max-width: 100%;
+        margin: 10px;
+    }
+}
+
+/* Tablet and Medium Screens */
+@media (max-width: 1200px) {
+    /* Layout Changes */
+    .container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        height: 98vh;
+    }
+
+    /* Video Section */
+    .video-section {
+        border-radius: 24px 24px 0 0;
+    }
+
+    #videoElement {
+        border-radius: 24px 24px 0 0;
+    }
+
+    /* Chat Section */
+    .chat-section {
+        border-radius: 0 0 24px 24px;
+    }
+
+    .chat-header {
+        border-radius: 0;
+    }
+
+    .input-container {
+        border-radius: 0 0 24px 24px;
+    }
+
+    /* Settings Panel */
+    .settings-panel {
+        max-width: 80%;
+        margin: 0 auto;
+    }
+}
+
+/* Mobile and Small Screens */
+@media (max-width: 768px) {
+    /* Global Adjustments */
+    body {
+        padding: 5px;
+    }
+
+    .container {
+        border-radius: 16px;
+        height: 99vh;
+        margin: 5px;
+    }
+
+    /* Video Section */
+    .video-section {
+        border-radius: 16px 16px 0 0;
+    }
+
+    .video-overlay {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .status-panel {
+        min-width: auto;
+        width: 100%;
+    }
+
+    /* Chat Section */
+    .chat-section {
+        border-radius: 0 0 16px 16px;
+    }
+
+    .chat-header {
+        padding: 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .chat-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .header-btn {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    /* Messages Container */
+    .messages-container {
+        padding: 20px;
+    }
+
+    .message {
+        max-width: 90%;
+        font-size: 13px;
+    }
+
+    /* Input Section */
+    .input-container {
+        padding: 20px;
+    }
+
+    .quick-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .quick-action {
+        justify-content: center;
+    }
+
+    .input-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .send-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Settings Panel */
+    .settings-panel {
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        min-width: auto;
+        max-width: none;
+        max-height: 80vh;
+    }
+
+    /* Controls */
+    .control-row {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .control-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+}
+
+/* Very Small Screens */
+@media (max-width: 480px) {
+    /* Further Adjustments */
+    .container {
+        margin: 0;
+        height: 100vh;
+        border-radius: 0;
+    }
+
+    .video-section,
+    .chat-section {
+        border-radius: 0;
+    }
+
+    /* Header Elements */
+    .chat-title h2 {
+        font-size: 18px;
+    }
+
+    .chat-title p {
+        font-size: 12px;
+    }
+
+    /* Message Bubbles */
+    .message {
+        max-width: 95%;
+        padding: 12px 16px;
+    }
+
+    /* Settings Panel */
+    .settings-panel {
+        padding: 16px;
+    }
+
+    .section-title {
+        font-size: 13px;
+    }
+
+    .setting-item label {
+        font-size: 12px;
+    }
+}
+
+/* Height-based Media Queries */
+@media (max-height: 700px) {
+    .container {
+        height: 98vh;
+    }
+
+    .chat-header {
+        padding: 15px 20px;
+    }
+
+    .messages-container {
+        padding: 15px;
+    }
+
+    .input-container {
+        padding: 15px;
+    }
+
+    .quick-actions {
+        display: none;
+    }
+}
+
+/* Landscape Mode on Mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .container {
+        grid-template-rows: auto 1fr;
+    }
+
+    .video-section {
+        max-height: 50vh;
+    }
+
+    .chat-section {
+        max-height: 50vh;
+    }
+
+    .quick-actions {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .quick-action {
+        flex: 0 1 calc(33.333% - 10px);
+    }
+}
+
+/* Print Styles */
+@media print {
+    .container {
+        height: auto;
+        display: block;
+    }
+
+    .video-section,
+    .input-container,
+    .chat-controls,
+    .control-row,
+    .settings-panel {
+        display: none;
+    }
+
+    .messages-container {
+        overflow: visible;
+    }
+
+    .message {
+        break-inside: avoid;
+        border: 1px solid #ccc;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    :root {
+        --primary-gradient: none;
+        --secondary-gradient: none;
+        --accent-gradient: none;
+    }
+
+    .message,
+    .button,
+    .input {
+        border: 2px solid currentColor;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .typing-indicator {
+        display: inline-block;
+    }
+}
+

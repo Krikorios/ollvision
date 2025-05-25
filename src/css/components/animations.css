@@ -1,0 +1,207 @@
+/* Animation Keyframes */
+
+/* Slide In Animation */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Slide Up Animation */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.1);
+    }
+}
+
+/* Typing Pulse Animation */
+@keyframes typingPulse {
+    0%, 80%, 100% {
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+    40% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Spin Animation */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Animation Classes */
+
+/* Slide In */
+.animate-slide-in {
+    animation: slideIn 0.4s ease;
+}
+
+/* Slide Up */
+.animate-slide-up {
+    animation: slideUp 0.3s ease;
+}
+
+/* Pulse */
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+/* Typing Pulse */
+.animate-typing {
+    animation: typingPulse 1.4s infinite ease-in-out;
+}
+
+/* Spin */
+.animate-spin {
+    animation: spin 1s ease-in-out infinite;
+}
+
+/* Staggered Typing Dots */
+.typing-dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.typing-dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+/* Hover Transitions */
+.hover-scale {
+    transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+    transform: scale(1.1);
+}
+
+.hover-scale-sm:hover {
+    transform: scale(1.05);
+}
+
+.hover-translate-up:hover {
+    transform: translateY(-2px);
+}
+
+/* Loading Spinner */
+.loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+}
+
+/* Theme Toggle Animation */
+.theme-toggle {
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1) rotate(180deg);
+}
+
+/* Message Action Transitions */
+.message-actions {
+    transition: opacity 0.2s ease;
+}
+
+.message:hover .message-actions {
+    opacity: 1;
+}
+
+/* Button Transitions */
+.btn-transition {
+    transition: all 0.3s ease;
+}
+
+/* Component Show/Hide Animations */
+.fade-in {
+    animation: slideIn 0.3s ease forwards;
+}
+
+.fade-out {
+    animation: slideOut 0.3s ease forwards;
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+}
+
+/* State Change Animations */
+.status-dot {
+    transition: background-color 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+/* Input Focus Animations */
+.input-focus-animation {
+    transition: border-color 0.3s ease,
+                box-shadow 0.3s ease,
+                background-color 0.3s ease;
+}
+
+/* Panel Transitions */
+.panel-transition {
+    transition: transform 0.3s ease,
+                opacity 0.3s ease,
+                visibility 0.3s ease;
+}
+
+/* Notification Animation */
+.notification {
+    animation: slideIn 0.3s ease;
+    transition: opacity 0.3s ease,
+                transform 0.3s ease;
+}
+
+.notification.hiding {
+    opacity: 0;
+    transform: translateX(100%);
+}
+
+/* Global Animation Variables */
+:root {
+    --transition-speed-fast: 0.2s;
+    --transition-speed-normal: 0.3s;
+    --transition-speed-slow: 0.4s;
+    --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+}
+

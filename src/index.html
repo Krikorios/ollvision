@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ollama Vision Chat Pro - AI-powered visual chat application">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <title>Ollama Vision Chat Pro - Enhanced</title>
+
+    <!-- Base Styles -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/themes.css">
+
+    <!-- Component Styles -->
+    <link rel="stylesheet" href="css/components/video.css">
+    <link rel="stylesheet" href="css/components/chat.css">
+    <link rel="stylesheet" href="css/components/settings.css">
+    <link rel="stylesheet" href="css/components/notifications.css">
+    <link rel="stylesheet" href="css/components/animations.css">
+    <link rel="stylesheet" href="css/components/responsive.css">
+
+    <!-- PWA Support -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+    <div class="performance-monitor" id="performanceMonitor">
+        <div>FPS: <span id="fpsCounter">--</span></div>
+        <div>Memory: <span id="memoryUsage">--</span>MB</div>
+    </div>
+    
+    <div class="container">
+        <!-- Video Section -->
+        <div class="video-section">
+            <div class="video-container">
+                <video id="videoElement" autoplay muted playsinline></video>
+                <canvas id="captureCanvas"></canvas>
+                
+                <div class="video-overlay">
+                    <!-- Status Panel -->
+                    <div class="status-panel">
+                        <div class="status-row">
+                            <div class="status-dot" id="statusDot"></div>
+                            <span id="statusText">Connecting...</span>
+                        </div>
+                        <div class="model-info" id="modelInfo">
+                            Model: <span id="currentModel">Loading...</span>
+                        </div>
+                        <div class="performance-info">
+                            <span>Response: <span id="responseTime">--</span>ms</span>
+                            <span>Images: <span id="imageCount">0</span></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Controls -->
+                    <div class="controls">
+                        <div class="control-row">
+                            <button class="control-btn" id="settingsBtn" title="Settings">⚙️</button>
+                            <button class="control-btn" id="captureBtn" title="Take Photo">📸</button>
+                            <button class="control-btn" id="pauseBtn" title="Pause/Resume Auto-capture">⏸️</button>
+                            <button class="control-btn" id="perfBtn" title="Performance Monitor">📊</button>
+                        </div>
+                        <div class="control-row">
+                            <button class="control-btn" id="clearBtn" title="Clear Chat">🗑️</button>
+                            <button class="control-btn" id="exportBtn" title="Export Chat">💾</button>
+                            <button class="control-btn" id="fullscreenBtn" title="Toggle Fullscreen">⛶</button>
+                            <button class="control-btn" id="voiceBtn" title="Voice Input">🎤</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Preview -->
+                <div class="image-preview" id="imagePreview">
+                    <img id="previewImg" alt="Last capture">
+                    <div class="preview-label">Last Capture</div>
+                </div>
+
+                <!-- Settings Panel -->
+                <div class="settings-panel" id="settingsPanel">
+                    <!-- Settings content loaded dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Section -->
+        <div class="chat-section">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <h2>🎥 Vision Chat Pro</h2>
+                    <p>AI that can see and understand your world in real-time</p>
+                </div>
+                <div class="chat-controls">
+                    <button class="header-btn" id="voiceToggle">🎤 Voice</button>
+                    <button class="header-btn" id="modeBtn">💬 Enhanced</button>
+                    <button class="header-btn" id="shareBtn">📤 Share</button>
+                </div>
+            </div>
+
+            <div class="messages-container" id="messagesContainer">
+                <div class="message system">
+                    🎉 Welcome to Enhanced Vision Chat Pro! I'm your AI assistant with advanced vision capabilities. I can see through your camera and help with:
+                    <br><br>
+                    • 📊 Analyzing images and scenes
+                    • 📖 Reading text and documents
+                    • 🎨 Providing creative feedback
+                    • 🏠 Organizing and decorating spaces
+                    • 🔧 Technical troubleshooting
+                    <br><br>
+                    Just start chatting and I'll help you with whatever you need!
+                </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+                <span>AI is thinking...</span>
+            </div>
+
+            <div class="input-container">
+                <div class="quick-actions" id="quickActions">
+                    <button class="quick-action" data-prompt="What do you see in my camera right now?">👁️ What do you see?</button>
+                    <button class="quick-action" data-prompt="Help me organize this space efficiently">🏠 Organize space</button>
+                    <button class="quick-action" data-prompt="What colors and design elements are prominent?">🎨 Analyze design</button>
+                    <button class="quick-action" data-prompt="Can you read and transcribe any text you see?">📖 Read text</button>
+                    <button class="quick-action" data-prompt="Give me detailed feedback and suggestions">💡 Get feedback</button>
+                    <button class="quick-action" data-prompt="Explain what's happening in this scene">🎬 Describe scene</button>
+                </div>
+                
+                <div class="input-row">
+                    <div class="input-wrapper">
+                        <textarea 
+                            id="messageInput" 
+                            placeholder="Ask me anything about what I can see, or just have a conversation..."
+                            rows="1"
+                        ></textarea>
+                        <div class="input-actions">
+                            <button class="input-btn" id="emojiBtn" title="Add emoji">😊</button>
+                            <button class="input-btn" id="attachBtn" title="Attach image">📎</button>
+                            <button class="input-btn" id="micBtn" title="Voice input">🎤</button>
+                        </div>
+                    </div>
+                    <button class="send-btn" id="sendBtn">
+                        <span>Send</span>
+                        <span>🚀</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core JavaScript Modules -->
+    <script type="module" src="js/main.js"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => console.log('ServiceWorker registered'))
+                    .catch(error => console.log('ServiceWorker registration failed:', error));
+            });
+        }
+    </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ollama Vision Chat Pro - AI-powered visual chat application">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <title>Ollama Vision Chat Pro - Enhanced</title>
+
+    <!-- Base Styles -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/themes.css">
+
+    <!-- Component Styles -->
+    <link rel="stylesheet" href="css/components/video.css">
+    <link rel="stylesheet" href="css/components/chat.css">
+    <link rel="stylesheet" href="css/components/settings.css">
+    <link rel="stylesheet" href="css/components/notifications.css">
+    <link rel="stylesheet" href="css/components/animations.css">
+    <link rel="stylesheet" href="css/components/responsive.css">
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+    <div class="performance-monitor" id="performanceMonitor">
+        <div>FPS: <span id="fpsCounter">--</span></div>
+        <div>Memory: <span id="memoryUsage">--</span>MB</div>
+    </div>
+    
+    <div class="container">
+        <!-- Video Section -->
+        <div class="video-section">
+            <div class="video-container">
+                <video id="videoElement" autoplay muted playsinline></video>
+                <canvas id="captureCanvas"></canvas>
+                
+                <div class="video-overlay">
+                    <!-- Status Panel -->
+                    <div class="status-panel">
+                        <div class="status-row">
+                            <div class="status-dot" id="statusDot"></div>
+                            <span id="statusText">Connecting...</span>
+                        </div>
+                        <div class="model-info" id="modelInfo">
+                            Model: <span id="currentModel">Loading...</span>
+                        </div>
+                        <div class="performance-info">
+                            <span>Response: <span id="responseTime">--</span>ms</span>
+                            <span>Images: <span id="imageCount">0</span></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Controls -->
+                    <div class="controls">
+                        <div class="control-row">
+                            <button class="control-btn" id="settingsBtn" title="Settings">⚙️</button>
+                            <button class="control-btn" id="captureBtn" title="Take Photo">📸</button>
+                            <button class="control-btn" id="pauseBtn" title="Pause/Resume Auto-capture">⏸️</button>
+                            <button class="control-btn" id="perfBtn" title="Performance Monitor">📊</button>
+                        </div>
+                        <div class="control-row">
+                            <button class="control-btn" id="clearBtn" title="Clear Chat">🗑️</button>
+                            <button class="control-btn" id="exportBtn" title="Export Chat">💾</button>
+                            <button class="control-btn" id="fullscreenBtn" title="Toggle Fullscreen">⛶</button>
+                            <button class="control-btn" id="voiceBtn" title="Voice Input">🎤</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Preview -->
+                <div class="image-preview" id="imagePreview">
+                    <img id="previewImg" alt="Last capture">
+                    <div class="preview-label">Last Capture</div>
+                </div>
+
+                <!-- Settings Panel -->
+                <div class="settings-panel" id="settingsPanel">
+                    <!-- Settings content loaded dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Section -->
+        <div class="chat-section">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <h2>🎥 Vision Chat Pro</h2>
+                    <p>AI that can see and understand your world in real-time</p>
+                </div>
+                <div class="chat-controls">
+                    <button class="header-btn" id="voiceToggle">🎤 Voice</button>
+                    <button class="header-btn" id="modeBtn">💬 Enhanced</button>
+                    <button class="header-btn" id="shareBtn">📤 Share</button>
+                </div>
+            </div>
+
+            <div class="messages-container" id="messagesContainer">
+                <div class="message system">
+                    🎉 Welcome to Enhanced Vision Chat Pro! I'm your AI assistant with advanced vision capabilities. I can see through your camera and help with:
+                    <br><br>
+                    • 📊 Analyzing images and scenes
+                    • 📖 Reading text and documents
+                    • 🎨 Providing creative feedback
+                    • 🏠 Organizing and decorating spaces
+                    • 🔧 Technical troubleshooting
+                    <br><br>
+                    Just start chatting and I'll help you with whatever you need!
+                </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="typing-dots">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+                <span>AI is thinking...</span>
+            </div>
+
+            <div class="input-container">
+                <div class="quick-actions" id="quickActions">
+                    <button class="quick-action" data-prompt="What do you see in my camera right now?">👁️ What do you see?</button>
+                    <button class="quick-action" data-prompt="Help me organize this space efficiently">🏠 Organize space</button>
+                    <button class="quick-action" data-prompt="What colors and design elements are prominent?">🎨 Analyze design</button>
+                    <button class="quick-action" data-prompt="Can you read and transcribe any text you see?">📖 Read text</button>
+                    <button class="quick-action" data-prompt="Give me detailed feedback and suggestions">💡 Get feedback</button>
+                    <button class="quick-action" data-prompt="Explain what's happening in this scene">🎬 Describe scene</button>
+                </div>
+                
+                <div class="input-row">
+                    <div class="input-wrapper">
+                        <textarea 
+                            id="messageInput" 
+                            placeholder="Ask me anything about what I can see, or just have a conversation..."
+                            rows="1"
+                        ></textarea>
+                        <div class="input-actions">
+                            <button class="input-btn" id="emojiBtn" title="Add emoji">😊</button>
+                            <button class="input-btn" id="attachBtn" title="Attach image">📎</button>
+                            <button class="input-btn" id="micBtn" title="Voice input">🎤</button>
+                        </div>
+                    </div>
+                    <button class="send-btn" id="sendBtn">
+                        <span>Send</span>
+                        <span>🚀</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core JavaScript -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
+
